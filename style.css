@@ -89,6 +89,11 @@ button {
   border-radius: 12px;
   outline: none;
   margin-bottom: 10px;
+
+  /* Scrollable */
+  max-height: 150px;       /* max height of note box */
+  overflow-y: auto;        /* vertical scroll if text too long */
+  white-space: pre-wrap;   /* keep line breaks */
 }
 
 textarea {
@@ -98,6 +103,11 @@ textarea {
   padding: 10px;
   border: 1px solid #ccc;
   font-family: inherit;
+
+  /* Scrollable & resizable */
+  max-height: 150px;
+  overflow-y: auto;
+  resize: vertical;
 }
 
 #sendReply {
