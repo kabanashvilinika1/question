@@ -19,7 +19,7 @@
   <h1>Will you be my Valentine? 💚</h1>
   <p class="subtitle">Pink & green — just us 💗💚</p>
 
-  <div class="buttons">
+ <div class="buttons" id="buttons">
     <button id="yesBtn">YES 💚</button>
     <button id="noBtn">NO 🙄</button>
   </div>
@@ -64,16 +64,21 @@
 
   // YES click
   yesBtn.addEventListener("click", () => {
-    note.classList.remove("hidden");
+  // hide buttons
+  document.getElementById("buttons").style.display = "none";
 
-    fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: `💚 **Your Valentine agreed!** 💚\n📱 Device: ${getPhoneType()}`
-      })
-    });
+  // show note
+  note.classList.remove("hidden");
+
+  // notify Discord
+  fetch(WEBHOOK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: `💚 **Your Valentine agreed!** 💚\n📱 Device: ${getPhoneType()}`
+    })
   });
+});
 
   // Send reply to Discord
   sendReply.addEventListener("click", () => {
