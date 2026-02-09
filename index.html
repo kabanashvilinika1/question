@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Be My Valentine 💚</title>
+
+  <!-- Valentine fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts"></div>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💚</h1>
+  <p class="subtitle">Pink & green — just us 💗💚</p>
+
+  <div class="buttons">
+    <button id="yesBtn">YES 💚</button>
+    <button id="noBtn">NO 🙄</button>
+  </div>
+
+  <!-- NOTE -->
+  <div id="note" class="hidden">
+    <h2>💚 My Note To You 💚</h2>
+
+    <!-- YOU CAN EDIT THIS TEXT LATER -->
+    <p class="editable-note" contenteditable="true">
+      This is my note for you 💚  
+      You can change this text anytime.
+    </p>
+
+    <textarea id="reply" placeholder="Write something back to me 💌"></textarea>
+    <button id="sendReply">Send 💗</button>
+  </div>
+</div>
+
+<script>
+  // 🔔 PASTE YOUR DISCORD WEBHOOK HERE
+  const WEBHOOK_URL = "https://discord.com/api/webhooks/1470366658559475796/2l-DjoJGgIV7K0QArBFueX3d_pDIPW_nxxuqdzCIssxCOIzEZYFwUhzZBjOYSVYKgJx5";
+
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const note = document.getElementById("note");
+  const sendReply = document.getElementById("sendReply");
+
+  function getPhoneType() {
+    const ua = navigator.userAgent;
+    if (/iPhone/i.test(ua)) return "iPhone";
+    if (/Android/i.test(ua)) return "Android";
+    return "Other device";
+  }
+
+  // NO button runs away
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 120 - 60;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  });
+
+  // YES click
+  yesBtn.addEventListener("click", () => {
+    note.classList.remove("hidden");
+
+    fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: `💚 **Your Valentine agreed!** 💚\n📱 Device: ${getPhoneType()}`
+      })
+    });
+  });
+
+  // Send reply to Discord
+  sendReply.addEventListener("click", () => {
+    const text = document.getElementById("reply").value.trim();
+    if (!text) return;
+
+    fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: `💌 **Message from your Valentine:**\n${text}`
+      })
+    });
+
+    document.getElementById("reply").value = "";
+    alert("Sent 💚");
+  });
+
+  // Floating hearts
+  const hearts = document.querySelector(".hearts");
+
+  setInterval(() => {
+    const heart = document.createElement("span");
+    heart.textContent = Math.random() > 0.5 ? "💚" : "💗";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    hearts.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 7000);
+  }, 300);
+</script>
+
+</body>
+</html>
