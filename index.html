@@ -12,6 +12,11 @@
 </head>
 <body>
 
+<div id="cover">
+  <h1>✨ One moment…</h1>
+  <p>Something special is waiting 💚</p>
+</div>
+  
 <!-- Floating hearts -->
 <div class="hearts"></div>
 
@@ -50,6 +55,21 @@
 </div>
 
 <script>
+// ⏰ Valentine unlock time (Feb 14, 00:01)
+const unlockTime = new Date("2026-02-14T00:01:00");
+
+const cover = document.getElementById("cover");
+
+function checkTime() {
+  const now = new Date();
+  if (now >= unlockTime) {
+    cover.style.display = "none";
+  }
+}
+
+checkTime();
+setInterval(checkTime, 1000);
+  
   // 🔔 PASTE YOUR DISCORD WEBHOOK HERE
   const WEBHOOK_URL = "https://discord.com/api/webhooks/1470366658559475796/2l-DjoJGgIV7K0QArBFueX3d_pDIPW_nxxuqdzCIssxCOIzEZYFwUhzZBjOYSVYKgJx5";
 
